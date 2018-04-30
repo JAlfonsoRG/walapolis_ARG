@@ -1,0 +1,39 @@
+<div class="text-center">
+  <h2>¡Buenas tardes!</h2>
+</div>
+<p>Bienvenido a Walapolis</p>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="row">
+      <div class="form-group col-sm-6">
+        <%= f.text_field :full_name, autofocus: true, class: 'form-control', placeholder: 'Nombre completo' %>
+      </div>
+
+      <div class="form-group col-sm-6">
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', placeholder: 'Email' %>
+      </div>
+  </div>
+
+  <div class="row">
+      <div class="form-group col-sm-6">
+        <% if @minimum_password_length %>
+        <small class="text-muted">(<%= @minimum_password_length %> characters minimum)</small>
+        <% end %><br />
+        <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Contraseña' %>
+      </div>
+    
+      <div class="form-group col-sm-6">
+        <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control', placeholder: 'Confirma tu contraseña' %>
+      </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Crear mi cuenta", class: 'btn-primary form-control' %>
+  </div>
+<% end %>
+
+  <div class="text-center">
+    <%= render "users/shared/links" %>
+  </div>
