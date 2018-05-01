@@ -1,3 +1,5 @@
+<%= render 'layouts/shared/greetings' %>
+
 <h2>Log in</h2>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
@@ -21,6 +23,20 @@
   <div class="actions">
     <%= f.submit "Log in" %>
   </div>
+
+  <div class="form-group text-center">
+    
+  </div>
 <% end %>
+
+<hr>
+<div class="row">
+  <div class="col-sm-6">
+    <%= link_to "<i class='fab fa-facebook'></i> Registrarme con Facebook".html_safe, user_facebook_omniauth_authorize_path, class: 'btn btn-success btn-block' %>
+  </div>
+  <div class="col-sm-6">
+    <%= link_to "<i class='fab fa-facebook'></i> Registrarme con Google".html_safe, user_google_oauth2_omniauth_authorize_path, class: 'btn btn-success btn-block' %>
+  </div>
+</div>
 
 <%= render "users/shared/links" %>
