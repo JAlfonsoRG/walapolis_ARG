@@ -1,8 +1,37 @@
-<i class="fab fa-facebook fa-3x"></i>
-<h1>StaticPages#home</h1>
-<p>Find me in app/views/static_pages/home.html.erb</p>
-
 <% if user_signed_in? %>
   <h3>Teléfono: <%= current_user.phone if current_user.show_phone? %></h3>
   <h3>Correo: <%= current_user.email if current_user.show_email? %></h3>
+<% end %>
+
+<% if @ideas.present? %>
+  <% @ideas.each_slice(3) do |ideas| %>
+  <div class="row">
+    <% ideas.each do |idea| %>
+    <div class="col">
+      <p>IMAGEN</p>
+      <h2><%= idea.title %></h2>
+      <small>
+        <% idea.categories.each do |category| %>
+          <%= link_to category.name, root_path(categoria: category)  %> |
+          <% end %>
+      </small>
+      <h4><%= idea.show_categories %></h4>
+      <p>
+        Por: <%= idea.user.full_name %> hace <%= time_ago_in_words(idea.created_at) %> días 
+        <small>[LIKES] likes // [COMMENTS]</small>
+      </p>
+      <p><%= idea.body.truncate(140) %></p>
+      <p><button class="btn btn-primary"><i class="far fa-heart"></i> Me gusta</button>
+      <%= link_to "Ver mas..", idea_path(idea), class: 'btn-light' %></p>
+    </div>
+    <% end  %>
+  </div>
+  <% end %>
+<% else %>
+<% if user_signed_in? %>
+  <p>Crea la primer idea <%= link_to "Crea la primer idea", new_idea_path %> </p>
+<% else %>
+  <p>No existen ideas registraadas <%= link_to "Ingresa para crear la primera idea", new_user_session_path %></p>
+<% end %>
+
 <% end %>
