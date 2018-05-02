@@ -32,12 +32,16 @@
 <% end %>
 
 <hr>
+<div class="text-center text-muted">
+  <p>También puedes crear tu cuenta a través de</p>
+</div>
+
 <div class="row">
   <div class="col-sm-6">
     <%= link_to "<i class='fab fa-facebook'></i> Registrarme con Facebook".html_safe, user_facebook_omniauth_authorize_path, class: 'btn btn-success btn-block' %>
   </div>
   <div class="col-sm-6">
-    <%= link_to "<i class='fab fa-facebook'></i> Registrarme con Google".html_safe, user_google_oauth2_omniauth_authorize_path, class: 'btn btn-success btn-block' %>
+    <%= link_to "<i class='fab fa-google'></i> Registrarme con Google".html_safe, user_google_oauth2_omniauth_authorize_path, class: 'btn btn-success btn-block' %>
   </div>
 </div>
 

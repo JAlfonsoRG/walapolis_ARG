@@ -1,31 +1,29 @@
 <%= render 'layouts/shared/greetings' %>
 
-<h2>Log in</h2>
+<h2>Iniciar sesión</h2>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  <div class="form-group">
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', placeholder: 'Email' %>
   </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
+  <div class="form-group">
+    <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Password' %>
   </div>
 
   <% if devise_mapping.rememberable? -%>
-    <div class="field">
+    <div class="form-group">
       <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+      <%= f.label :remember_me, "No cerrar sesión" %>
     </div>
   <% end -%>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
+  <div class="form-group">
+    <%= f.submit "Entrar", class: 'btn btn-outline-primary btn-block' %>
   </div>
 
   <div class="form-group text-center">
-    
+    <%= link_to "He olvidado mi contraseña", new_user_password_path %>
   </div>
 <% end %>
 
@@ -35,8 +33,10 @@
     <%= link_to "<i class='fab fa-facebook'></i> Registrarme con Facebook".html_safe, user_facebook_omniauth_authorize_path, class: 'btn btn-success btn-block' %>
   </div>
   <div class="col-sm-6">
-    <%= link_to "<i class='fab fa-facebook'></i> Registrarme con Google".html_safe, user_google_oauth2_omniauth_authorize_path, class: 'btn btn-success btn-block' %>
+    <%= link_to "<i class='fab fa-google'></i> Registrarme con Google".html_safe, user_google_oauth2_omniauth_authorize_path, class: 'btn btn-success btn-block' %>
   </div>
 </div>
 
-<%= render "users/shared/links" %>
+<div class="text-center">
+  <%= render "users/shared/links" %>
+</div>
