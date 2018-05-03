@@ -28,3 +28,4 @@
 .DS_Store
 localhost.crt
 localhost.key
+.env

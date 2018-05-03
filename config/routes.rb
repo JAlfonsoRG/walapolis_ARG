@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  # resources :likes
   resources :ideas
   get 'static_pages/home'
   devise_for :users, controllers: {
@@ -17,4 +18,5 @@ Rails.application.routes.draw do
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'static_pages#home'
+  post '/likes/tgol/:user_id/:idea_id', to: 'likes#the_god_of_likes', as: :tgol
 end

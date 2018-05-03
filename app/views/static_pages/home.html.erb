@@ -15,14 +15,12 @@
           <%= link_to category.name, root_path(categoria: category)  %> |
           <% end %>
       </small>
-      <h4><%= idea.show_categories %></h4>
       <p>
-        Por: <%= idea.user.full_name %> hace <%= time_ago_in_words(idea.created_at) %> días 
-        <small>[LIKES] likes // [COMMENTS]</small>
+        Por: <%= idea.user.full_name %> hace <%= time_ago_in_words(idea.created_at) %> 
+        <small><%= idea.total_likes %> likes // [COMMENTS]</small>
       </p>
       <p><%= idea.body.truncate(140) %></p>
-      <p><button class="btn btn-primary"><i class="far fa-heart"></i> Me gusta</button>
-      <%= link_to "Ver mas..", idea_path(idea), class: 'btn-light' %></p>
+      <p><%= render "/layouts/shared/like_button", idea: idea %><%= link_to "Ver más..", idea_path(idea), class: 'btn-light' %></p>
     </div>
     <% end  %>
   </div>

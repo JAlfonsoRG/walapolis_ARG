@@ -10,3 +10,8 @@
     <li><%= link_to "Entrar", entrar_path %></li>
   <% end %>
 </ul>
+
+<form action="<%= root_path %>">
+  <input type="text" name="search" class="form-control">
+  <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Buscar ideas...</button>
+</form>

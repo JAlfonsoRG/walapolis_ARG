@@ -1,6 +1,7 @@
 class User < ApplicationRecord
-  after_create :send_welcome_email
+  # after_create :send_welcome_email
   has_many :ideas
+  has_many :likes
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -24,12 +25,22 @@ class User < ApplicationRecord
     end
   end
 
+  
+  def like_idea(idea)
+    like = Like.where("user_id = ? AND idea_id = ?", self.id, idea.id).first
+    if like.present?
+      return true
+    else
+      return false
+    end
+  end
+  
   private
-
+  
   def send_welcome_email
     require 'mailgun'   
     # First, instantiate the Mailgun Client with your API key
-    mg_client = Mailgun::Client.new 'clave'    
+    mg_client = Mailgun::Client.new "#{ENV['MAILGUN_API_KEY']}"    
     # Define your message parameters
     message_params =  { from: 'hola@walapolis.com',
                         to: self.email,

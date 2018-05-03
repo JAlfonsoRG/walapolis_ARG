@@ -1,14 +1,18 @@
 <p id="notice"><%= notice %></p>
 
+  <div class="text-center">
+    <p>IMAGEN</p>
+  </div>
+
 <p>
   <strong>User:</strong>
-  <%= @idea.user %>
+  <%= @idea.user.full_name %>
 </p>
 
 <p>
   <strong>Categorias:</strong>
   <ul>
-    <li><% @idea.categories.each do |category|  %></li>
+    <% @idea.categories.each do |category|  %>
     <li><%= category.name %></li>
       <% end %>
   </ul>
