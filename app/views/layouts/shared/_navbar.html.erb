@@ -1,17 +1,24 @@
-<ul>
-  <li><%= link_to "home", root_path %></li>
-  <% if user_signed_in? %>
-  <%= "#{current_user.full_name}(#{current_user.email})" %>
-    <li><%= link_to "Mis ideas", ideas_path %></li>
-    <li><%= link_to "Mi cuenta", edit_user_registration_path %></li>
-    <li><%= link_to "Cerrar sesión", destroy_user_session_path, method: :delete %></li>
-  <% else %>
-    <li><%= link_to "Crear cuenta", registro_path %></li>
-    <li><%= link_to "Entrar", entrar_path %></li>
-  <% end %>
-</ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <p class="navbar-brand" ><%= link_to 'Walapolis', root_path %></p>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-<form action="<%= root_path %>">
-  <input type="text" name="search" class="form-control">
-  <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Buscar ideas...</button>
-</form>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">  
+    <ul class="navbar-nav mr-auto">
+      <% if user_signed_in? %>
+        <%= "#{current_user.full_name}(#{current_user.email})" %>
+          <li class="nav-item"><%= link_to "Mis ideas", ideas_path %></li>
+          <li class="nav-item"><%= link_to "Mi cuenta", edit_user_registration_path %></li>
+          <li class="nav-item"><%= link_to "Cerrar sesión", destroy_user_session_path, method: :delete %></li>
+      <% else %>
+          <li class="nav-item"><%= link_to "Crear cuenta", registro_path %></li>
+          <li class="nav-item"><%= link_to "Entrar", entrar_path %></li>
+      <% end %>
+      </ul>
+    </div>
+      <form class="form-inline my-2 my-lg-0" action="<%= root_path %>">
+          <input type="search" name="search" class="form-control">
+          <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i> Buscar ideas...</button>
+      </form>
+</nav>

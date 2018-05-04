@@ -2,6 +2,8 @@ class User < ApplicationRecord
   # after_create :send_welcome_email
   has_many :ideas
   has_many :likes
+  has_many :comments
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -25,6 +27,9 @@ class User < ApplicationRecord
     end
   end
 
+  def first_name
+    self.full_name.blank? ? self.email : self.full_name.split(" ")[0]
+  end
   
   def like_idea(idea)
     like = Like.where("user_id = ? AND idea_id = ?", self.id, idea.id).first
@@ -34,8 +39,6 @@ class User < ApplicationRecord
       return false
     end
   end
-  
-  private
   
   def send_welcome_email
     require 'mailgun'   

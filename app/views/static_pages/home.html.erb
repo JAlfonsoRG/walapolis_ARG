@@ -17,7 +17,7 @@
       </small>
       <p>
         Por: <%= idea.user.full_name %> hace <%= time_ago_in_words(idea.created_at) %> 
-        <small><%= idea.total_likes %> likes // [COMMENTS]</small>
+        <small><span class="count-likes"><%= idea.total_likes %></span> likes <%= idea.total_comments %> comentarios</small>
       </p>
       <p><%= idea.body.truncate(140) %></p>
       <p><%= render "/layouts/shared/like_button", idea: idea %><%= link_to "Ver más..", idea_path(idea), class: 'btn-light' %></p>

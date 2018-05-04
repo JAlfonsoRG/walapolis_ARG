@@ -1,4 +1,5 @@
 class IdeasController < ApplicationController
+  before_action :authenticate_user!, except: [:show]
   before_action :set_idea, only: [:show, :edit, :update, :destroy]
   before_action :verify_ownership, only: [:edit, :update, :destroy]
 
@@ -11,6 +12,8 @@ class IdeasController < ApplicationController
   # GET /ideas/1
   # GET /ideas/1.json
   def show
+    @comments = Comment.where(idea_id: @idea)
+    @comment = Comment.new(idea_id: @idea.id)
   end
 
   # GET /ideas/new
@@ -76,6 +79,6 @@ class IdeasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def idea_params
-      params.require(:idea).permit(:title, :body, :benefits, :initial_cost, :monthly_cost, :estimated_time, category_ids:[])
+      params.require(:idea).permit(:title, :body, :initial_cost, :monthly_cost, :estimated_time, category_ids:[], benefits:[])
     end
 end

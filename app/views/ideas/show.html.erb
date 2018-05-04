@@ -1,52 +1,129 @@
 <p id="notice"><%= notice %></p>
 
-  <div class="text-center">
-    <p>IMAGEN</p>
+<div class="idea-bg text-center">
+  <h1><%= @idea.title %></h1>
+  <p class="text-center">
+    <% @idea.categories.each do |category| %>
+      <span><%= link_to category.name, root_path(categoria: category) %> </span>
+    <% end %>
+  </p>
+  <p class="text-success text-center">
+    <span class="count-likes"><%= @idea.total_likes %></span> likes
+  </p>
+</div>
+<div class="user-avatar text-center">
+  <i class="fas fa-user-circle fa-3x"></i> <!-- current_user.image -->
+  <p>
+    <span><%= @idea.user.full_name %></span>
+    <% if @idea.user.verificated? %>
+      <span class="text-primary"><i class="far fa-check-circle"></i>Verificado</span>
+    <% end %>
+  </p>
+</div>
+
+<div class="row">
+  <div class="col-sm-8">
+    <p><span style="font-weight: 700; font-size: 28px;"><%= @idea.title %></span> - <%= @idea.show_categories %></p>
+    <p>Por: <i class="fas fa-user-circle"></i> <%= @idea.user.full_name %> - <%= @idea.created_at.strftime("%d/%m/%y") %></p>
+    <div>
+      <%= render "/layouts/shared/like_button", idea: @idea %>
+      <span class="text-success"><span class="count-likes"><%= @idea.total_likes %></span> likes</span>
+      <span class="ml-5"> <%= link_to "<i class='far fa-edit'></i> Editar idea".html_safe, edit_idea_path(@idea) %></span>
+    </div>
+
+    <div id="idea-body" align="justify">
+      <%= @idea.body %>
+    </div>
+
+    <div id="social_links">
+      <small>Compartir</small>
+      <hr>
+      <input type="text" name="idea-url" value="<%= "#{request.protocol}#{request.host_with_port}#{request.fullpath}" %>" class="form-control" readonly>
+      <div class="mt-3 text-center">
+        <%= link_to "<i class='fab fa-facebook fa-2x'></i>".html_safe, nil, class: 'mr-3' %>
+        <%= link_to "<i class='fab fa-twitter fa-2x'></i>".html_safe, nil, class: 'mr-3' %>
+        <%= link_to "<i class='fab fa-google fa-2x'></i>".html_safe, nil %><br>
+      </div>
+    </div>
+
+    <div id="comments">
+      <small><%= @idea.total_comments %> comentarios</small>
+      <div class="card">
+        <div class="card-header">
+          Deja tu comentario <br>
+          <% if user_signed_in? %>
+            <%= render 'comments/form', comment: @comment %>
+          <% else %>
+            <p>Para comentar inicia sesión</p>
+          <% end %>
+        </div>
+        <div class="card-body">
+          </i><%= render 'comments/index' %>
+        </div>        
+      </div>
+    </div>
   </div>
+  <!-- Termina primera columna -->
 
-<p>
-  <strong>User:</strong>
-  <%= @idea.user.full_name %>
-</p>
+  <div class="col-sm 2">
+    <div class="card">
+      <div class="card-header"><h4>Beneficios</h4> </div>
+        <div class="card-body">          
+          <% @idea.benefits.each do |benefit| %>
+          <ul class="list-unstyled">
+            <li><i class="fas fa-check text-success"></i><%= benefit %></li>
+          </ul>
+          <% end %>
+        </div>
+      </div>
 
-<p>
-  <strong>Categorias:</strong>
-  <ul>
-    <% @idea.categories.each do |category|  %>
-    <li><%= category.name %></li>
+      <br>
+
+      <div class="card">
+          <div class="card-header"><h4>Costo estimado</h4> </div>
+            <div class="card-body">
+              <div>Inversión inicial:
+                <input type="text" id="" name="" value="<%= number_to_currency(@idea.initial_cost) %> " class="form-control" readonly>
+              </div>
+              <div class="mt-3">Gasto mensual:
+                <input type="text" id="" name="" value="<%= number_to_currency(@idea.monthly_cost) %> " class="form-control" readonly>
+              </div>              
+            </div>
+            <small>La <strong>inversión inicial</strong> se refiere al monto estimado requerido para arrancar el proyecto y el <strong>gasto mensual</strong> necesario para mantenerlo activo.</small>
+      </div>
+      
+      <div class="card mt-4">
+        <div class="card-header"><h4>Tiempo estimado</h4></div>
+        <div class="card-body">
+          <% if (@idea.estimated_time == 0) || (@idea.estimated_time.nil?) %>
+            <h4>No se asigno un tiempo estimado</h4>
+          <% elsif @idea.estimated_time > 1 %>          
+            <h4 class="text-success text-center"><%= @idea.estimated_time %> meses</h4>
+            <% else %>
+            <h4 class="text-success text-center"><%= @idea.estimated_time %> mes</h4>            
+          <% end %>
+        </div>
+      </div>
+
+      <% if @idea.user.show_phone? || @idea.user.show_email? %>
+        <div class="card mt-4">
+          <div class="card-header"><h4>Hablar con <%= @idea.user.first_name.titleize %></h4></div>
+          <div class="card-body">
+            <% if @idea.user.show_phone? && @idea.user.phone.present? %>
+              <div>
+                  <%= link_to "<i class='fab fa-whatsapp'></i> Enviar WhatsApp".html_safe, "https://api.whatsapp.com/send?phone=521#{@idea.user.phone}&text=Hola #{@idea.user.first_name}, me gustaría colaborar en tu propuesta publicada en #{request.protocol}#{request.host_with_port}#{request.fullpath} ¿Platicamos?", target: "_blank", class: 'btn btn-outline-primary btn-block' %>
+              </div>
+            <% end %>
+            <% if @idea.user.show_email? %>
+              <div class="mt-3">
+                  <%= link_to "<i class='fas fa-envelope'></i>Enviar Email".html_safe, "mailto: #{@idea.user.email}?subject=Quiero participar en tu idea&body=Hola #{@idea.user.first_name}, me gustaría colaborar en tu propuesta publicada en #{request.protocol}#{request.host_with_port}#{request.fullpath} ¿Platicamos?", class: 'btn btn-outline-primary btn-block' %>
+              </div>
+            <% end %>
+          </div>
+        </div>
       <% end %>
-  </ul>
-</p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @idea.title %>
-</p>
-
-<p>
-  <strong>Body:</strong>
-  <%= @idea.body %>
-</p>
-
-<p>
-  <strong>Benefits:</strong>
-  <%= @idea.benefits %>
-</p>
-
-<p>
-  <strong>Initial cost:</strong>
-  <%= @idea.initial_cost %>
-</p>
-
-<p>
-  <strong>Monthly cost:</strong>
-  <%= @idea.monthly_cost %>
-</p>
-
-<p>
-  <strong>Estimated time:</strong>
-  <%= @idea.estimated_time %>
-</p>
+  </div>
+</div>
 
 <%= link_to 'Edit', edit_idea_path(@idea) %> |
 <%= link_to 'Back', ideas_path %>

@@ -3,5 +3,9 @@
 <% end %>
 
 <% if alert %>
-  <p class="alert alert-warning"><%= alert %></p>
+  <% if alert["class"].blank? %>
+    <p class="alert alert-warning"><%= alert %></p>
+  <% else %>  
+    <p class="alert alert#{alert["class"]}"><%= alert["class"] %></p>
+  <% end %>
 <% end %>

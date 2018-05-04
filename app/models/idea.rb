@@ -3,6 +3,7 @@ class Idea < ApplicationRecord
   has_many :likes
   has_many :category_ideas
   has_many :categories, through: :category_ideas
+  has_many :comments
 
   def show_categories
     categories = self.categories
@@ -21,5 +22,15 @@ class Idea < ApplicationRecord
     likes = Like.where(idea_id: self.id).count
     return likes
   end
+
+  def total_comments
+    comments = Comment.where(idea_id: self.id).count
+    return comments
+  end
+
+  # def url
+  #  url = "#{request.protocol}#{request.host_with_port}#{request.fullpath}"
+  #  return url
+  # end
 
 end
