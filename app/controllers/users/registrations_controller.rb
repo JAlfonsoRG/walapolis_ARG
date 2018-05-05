@@ -23,12 +23,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # PUT /resource
   def update
     # super
-    new_params = params.require(:user).permit(:email, :phone, :show_phone, :show_email, :bio, :current_password, :password, :password_confirmation)
+    new_params = params.require(:user).permit(:phone, :show_phone, :show_email, :bio, :current_password, :password, :password_confirmation, :full_name)
     change_password = true
     if params[:user][:password].blank?
       params[:user].delete("password")
       params[:user].delete("password_confirmation")
-      new_params = params.require(:user).permit(:email, :phone, :show_phone, :show_email, :bio)
+      new_params = params.require(:user).permit(:phone, :show_phone, :show_email, :bio, :full_name)
       change_password = false
     end
 
@@ -43,9 +43,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     if is_valid
       # set_flash_message :notice, :updated
-      # sign_in @user, :bypass => true
+      sign_in @user, :bypass => true
       # redirect_to after_update_path_for(@user)
-      redirect_to root_path, notice: 'Tu cuenta se ha actualizado'
+      redirect_to root_path, notice: 'Has actualizado tu cuenta con éxito'
     else
       render "edit"
     end
