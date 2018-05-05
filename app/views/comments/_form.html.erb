@@ -11,8 +11,8 @@
     </div>
   <% end %>
 
-    <%= form.hidden_field :user_id, value: current_user.id %>
-    <%= form.hidden_field :idea_id %>
+  <%= form.hidden_field :user_id, value: current_user.id %>
+  <%= form.hidden_field :idea_id %>
 
   <div class="form-group">
     <%= form.text_area :body, class: 'form-control' %>
@@ -22,6 +22,6 @@
     <span>
       <small>Publicar como  <%= current_user.full_name.titleize %></small>
       <%= form.submit controller.action_name == "show" ? "Publicar comentario": "Actualizar comentario", class: 'btn btn-primary' %>
-  </span>
+    </span>
   </div>
 <% end %>

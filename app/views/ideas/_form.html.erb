@@ -56,12 +56,12 @@
     <% @categories.each_slice(4) do |categories| %>
       <div class="col-sm-4">
         <% categories.each do |category| %>
-        <div class="checkbox">
-          <label class="checkbox inline">
-            <%= check_box_tag :category_ids, category.id, @idea.categories.include?(category), name: 'idea[category_ids][]' %>
-            <%= category.name %>
-          </label>
-        </div>
+          <div class="checkbox">
+            <label class="checkbox inline">
+              <%= check_box_tag :category_ids, category.id, @idea.categories.include?(category), name: 'idea[category_ids][]' %>
+              <%= category.name %>
+            </label>
+          </div>
         <% end %>
       </div>
     <% end %>

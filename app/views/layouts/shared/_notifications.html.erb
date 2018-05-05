@@ -1,11 +1,11 @@
 <% if notice %>
-  <p class="alert alert-success"><%= notice %></p>
+  <div class="alert alert-success text-center"><%= notice %></div>
 <% end %>
 
 <% if alert %>
   <% if alert["class"].blank? %>
-    <p class="alert alert-warning"><%= alert %></p>
+    <div class="alert alert-warning text-center"><%= alert %></div>
   <% else %>  
-    <p class="alert alert#{alert["class"]}"><%= alert["class"] %></p>
+    <div class="alert <%= alert['class'] %> text-center"><%= alert["body"] %></div>
   <% end %>
 <% end %>
