@@ -5,13 +5,13 @@
 <table class="table table-striped table-hover">
   <thead>
     <tr>
-      <th>User</th>
-      <th>Title</th>
+      <th>Usuario</th>
+      <th>Título</th>
       <th>Body</th>
-      <th>Benefits</th>
-      <th>Initial cost</th>
-      <th>Monthly cost</th>
-      <th>Estimated time</th>
+      <th>Beneficios</th>
+      <th>Costo inicial</th>
+      <th>Gastos mensuales</th>
+      <th>Tiempo estimado</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -35,5 +35,6 @@
 </table>
 
 <br>
-
-<%= link_to 'New Idea', new_idea_path %>
+<span class="py-4">
+  <%= link_to 'Nueva Idea', new_idea_path, class: 'btn btn-primary' %>
+</span>

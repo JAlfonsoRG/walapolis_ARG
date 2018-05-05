@@ -1,35 +1,37 @@
-<% if user_signed_in? %>
-  <h3>Teléfono: <%= current_user.phone if current_user.show_phone? %></h3>
-  <h3>Correo: <%= current_user.email if current_user.show_email? %></h3>
-<% end %>
-
 <% if @ideas.present? %>
   <% @ideas.each_slice(3) do |ideas| %>
-  <div class="row">
-    <% ideas.each do |idea| %>
-    <div class="col">
-      <p>IMAGEN</p>
-      <h2><%= idea.title %></h2>
-      <small>
-        <% idea.categories.each do |category| %>
-          <%= link_to category.name, root_path(categoria: category)  %> |
-          <% end %>
-      </small>
-      <p>
-        Por: <%= idea.user.full_name %> hace <%= time_ago_in_words(idea.created_at) %> 
-        <small><span class="count-likes"><%= idea.total_likes %></span> likes <%= idea.total_comments %> comentarios</small>
-      </p>
-      <p><%= idea.body.truncate(140) %></p>
-      <p><%= render "/layouts/shared/like_button", idea: idea %><%= link_to "Ver más..", idea_path(idea), class: 'btn-light' %></p>
+    <div class="row mb-5">
+      <% ideas.each do |idea| %>
+        <div class="col-sm-4">
+          <div class="card">
+              <%= image_tag 'idea-bg.jpg', class: 'card-img-top', style: 'min-height: 265px; max-height: 265px;' %>
+              <div class="card-body">
+                <h5 class="card-title"><%= idea.title %></h5>
+                <p>
+                  <small>
+                    <% idea.categories.each do |category| %>
+                      <%= link_to category.name, root_path(categoria: category)  %> |
+                    <% end %>
+                  </small>
+                </p>
+                <small class="card-subtitle mb-2 text-muted">
+                  Por: <%= link_to idea.user.full_name, nil %> hace <%= time_ago_in_words(idea.created_at) %> <br>
+                  <%= idea.total_likes %> likes // <%= idea.total_comments %> comentarios
+                </small>
+              </div>
+              <p class="card-text"><%= idea.body.truncate(140) %> <%= link_to "Ver más..", idea_path(idea) %></p>
+              <div class="card-footer">
+                <%= render "/layouts/shared/like_button", idea: idea %>
+              </div>
+          </div>
+        </div>
+      <% end  %>
     </div>
-    <% end  %>
-  </div>
   <% end %>
 <% else %>
-<% if user_signed_in? %>
-  <p>Crea la primer idea <%= link_to "Crea la primer idea", new_idea_path %> </p>
-<% else %>
-  <p>No existen ideas registraadas <%= link_to "Ingresa para crear la primera idea", new_user_session_path %></p>
-<% end %>
-
+  <% if user_signed_in? %>
+    <p>No existen ideas registradas <%= link_to "Crea la primer idea", new_idea_path %> </p>
+  <% else %>
+    <p>No existen ideas registraadas <%= link_to "Ingresa para crear la primera idea", new_user_session_path %></p>
+  <% end %>
 <% end %>

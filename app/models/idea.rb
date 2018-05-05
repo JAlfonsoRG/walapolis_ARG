@@ -15,7 +15,7 @@ class Idea < ApplicationRecord
   end
 
   def to_param
-    "#{self.id}-#{self.title.parameterize}"
+    "#{self.id}-#{self.title.try(:parameterize)}"
   end
 
   def total_likes
@@ -28,9 +28,9 @@ class Idea < ApplicationRecord
     return comments
   end
 
-  # def url
-  #  url = "#{request.protocol}#{request.host_with_port}#{request.fullpath}"
-  #  return url
-  # end
+  def url
+    url = "request.protocol"
+    return url
+  end
 
 end

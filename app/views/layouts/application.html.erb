@@ -13,9 +13,9 @@
   </head>
 
   <body>
+    <%= render 'layouts/shared/navbar' %> 
+    <%= render 'layouts/shared/notifications' %>       
     <div class="container">
-      <%= render 'layouts/shared/notifications' %>       
-      <%= render 'layouts/shared/navbar' %> 
       <%= yield %>
     </div>      
   </body>

@@ -18,71 +18,57 @@
 
   <div class="form-group">
     <%= form.label :body, "Describe tu idea" %>
-    <%= form.text_area :body, class: 'form-control' %>
+    <%= form.text_area :body, rows: 10, class: 'form-control' %>
   </div>
   
-  <div class="row">
-    <div class="col-sm-4">
-      <div class="form-group">
-          <%= form.label :benefits, "Beneficio1" %>
-        <%= form.text_field :benefits, class: 'form-control', name: 'idea[benefits][]', placeholder: 'Menciona un beneficio de tu propuesta', value: idea.benefits.first %>
-      </div>
+  <div class="row mb-4">
+    <div class="col-sm-4 form-group">
+      <%= form.label :benefits, "Beneficio1:" %>
+      <%= form.text_field :benefits, class: 'form-control', name: 'idea[benefits][]', placeholder: 'Menciona un beneficio de tu propuesta', value: idea.benefits.try(:first) %>
     </div>
-    <div class="col-sm-4">
-      <div class="form-group">
-          <%= form.label :benefits, "Beneficio2" %>
-          <%= form.text_field :benefits, class: 'form-control', name: 'idea[benefits][]', placeholder: 'Menciona un beneficio de tu propuesta', value: idea.benefits.second %>
-      </div>
+    <div class="col-sm-4 form-group">
+      <%= form.label :benefits, "Beneficio2:" %>
+      <%= form.text_field :benefits, class: 'form-control', name: 'idea[benefits][]', placeholder: 'Menciona un beneficio de tu propuesta', value: idea.benefits.try(:second) %>
     </div>
-    <div class="col-sm-4">
-      <div class="form-group">
-          <%= form.label :benefits, "Beneficio3" %>
-          <%= form.text_field :benefits, class: 'form-control', name: 'idea[benefits][]', placeholder: 'Menciona un beneficio de tu propuesta', value: idea.benefits.third %>
-      </div>
+    <div class="col-sm-4 form-group">
+      <%= form.label :benefits, "Beneficio3:" %>
+      <%= form.text_field :benefits, class: 'form-control', name: 'idea[benefits][]', placeholder: 'Menciona un beneficio de tu propuesta', value: idea.benefits.try(:third) %>
     </div>
   </div>
   
-  <div class="row">
-    <div class="col-sm-4">
-      <div class="form-group">
+  <div class="row mb-4">
+    <div class="col-sm-4 form-group">
         <%= form.label :initial_cost, "Inversión incial" %>
         <%= form.text_field :initial_cost, class: 'form-control' %>
-      </div>
     </div>
-    <div class="col-sm-4">
-      <div class="form-group">
+    <div class="col-sm-4 form-group">
         <%= form.label :monthly_cost, "Gasto mensual" %>
         <%= form.text_field :monthly_cost, class: 'form-control' %>
-      </div>
     </div>
-    <div class="col-sm-4">
-      <div class="form-group">
+    <div class="col-sm-4 form-group">
         <%= form.label :estimated_time, "Tiempo estimado" %>
         <%= form.number_field :estimated_time, class: 'form-control' %>
-      </div>
     </div>
   </div>
 
-  <div class="form-group">
-    <%= form.label nil, 'Selecciona 2 categorias:' %><br>
-    <div class="row">
-      <% @categories.each_slice(4) do |categories| %>
-        <div class="col-sm-4">
-          <% categories.each do |category| %>
-          <div class="checkbox">
-            <label class="checkbox inline">
-              <%= check_box_tag :category_ids, category.id, @idea.categories.include?(category), name: 'idea[category_ids][]' %>
-              <%= category.name %>
-            </label>
-          </div>
-          <% end %>
+  <%= form.label nil, 'Selecciona 2 categorias:' %><br>
+  <div class="row">
+    <% @categories.each_slice(4) do |categories| %>
+      <div class="col-sm-4">
+        <% categories.each do |category| %>
+        <div class="checkbox">
+          <label class="checkbox inline">
+            <%= check_box_tag :category_ids, category.id, @idea.categories.include?(category), name: 'idea[category_ids][]' %>
+            <%= category.name %>
+          </label>
         </div>
-      <% end %>
+        <% end %>
       </div>
+    <% end %>
   </div>
 
-  <div class="form-group">
-    <%= form.submit controller.action_name == "show" ? "Publicar idea" : "Actualizar idea", class: 'btn btn-primary' %>
-    <%= link_to 'Cancelar cambios[X]', idea_path(idea) %>
+  <div class="form-group text-center">
+    <%= form.submit controller.action_name == "new" ? "Publicar idea" : "Actualizar idea", class: 'btn btn-primary' %>
+    <%= controller.action_name == "new" ?  (link_to '[X] Cancelar', ideas_path) : (link_to '[X] Cancelar', idea_path(idea)) %>
   </div>
 <% end %>

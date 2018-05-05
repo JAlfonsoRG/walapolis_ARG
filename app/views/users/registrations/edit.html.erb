@@ -1,59 +1,63 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="form-group col-sm-6">
-    <%= f.text_field :phone, class: 'form-control', placeholder: 'Agregar teléfono celular' %>
-    <%= f.check_box :show_phone %>
-    <small>Seleccionar para permitir que otros usuarios te contacten por WhatsApp</small>
+<h3>Mi cuenta</h3>
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Perfil</a> 
+    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Contraseña</a> 
+    <a class="nav-item nav-link text-danger" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Borrar mi cuenta</a> 
   </div>
-  
-  <div class="form-group col-sm-6">
-    <p>Tu email es: <strong><%= current_user.email%></strong></p>    
-    <%= f.check_box :show_email %>
-    <small>Activar para permitir que otros usuarios te contacten por email</small>
-  </div>
+</nav>
 
-  <div class="form-group">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, disable: true %>
-  </div>
-
-  <div class="form-group">
-    <%= f.text_area :bio, placeholder: 'Cuéntanos a cerca de ti' %>
-  </div>
-
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
-  <div class="form-group">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %> 
+      <%= devise_error_messages! %>
+      <div class="form-group mt-5">
+        <p>Tu email es: <strong><%= current_user.email %></strong></p>
+        <%= f.check_box :show_email %>
+        <small>Seleccionar para permitir que otros usuarios te contacten por Email</small>
+      </div>
+      <div class="form-group">
+        <%= f.text_field :phone, class: 'form-control', placeholder: 'Agregar teléfono celular' %>
+        <%= f.check_box :show_phone %>
+        <small>Seleccionar para permitir que otros usuarios te contacten por WhatsApp</small>
+      </div>
+      <div class="form-group">
+        <%= f.text_area :bio, class: 'form-control', placeholder: 'Cuéntanos acerca de ti' %> 
+      </div>
+      <div class="form-group">
+        <%= f.label :email %><br /> 
+        <%= f.email_field :email, disabled: true, class: 'form-control' %> 
+      </div>
+      <div class="form-group">
+        <%= f.submit "Guardar perfil", class: 'btn btn-primary' %> 
+      </div>
     <% end %>
   </div>
-
-  <div class="form-group">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= devise_error_messages! %>
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+      <div class="row mt-5">
+        <div class="form-group col-sm-6">
+          <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Nueva contraseña' %>
+        </div>
+        <div class="form-group col-sm-6">
+          <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control', placeholder: 'Confirmar nueva contraseña' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.password_field :current_password, autocomplete: "off", class: 'form-control', placeholder: 'Contraseña actual (requerida para confirmar cambio)' %>
+      </div>
+      <div class="form-group">
+        <%= f.submit "Cambiar contraseña", class: 'btn btn-primary' %>
+      </div>            
+    <% end %> 
   </div>
 
-  <div class="form-group">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off" %>
+  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+    <h4 class="text-danger mt-5">Borrar mi cuenta</h4>
+    <p>Este cambio es irreversible. Se eliminarán todas tus ideas publicadas, comentarios y likes que hayas otorgado a otras ideas. <%= button_to "Borrar cuenta", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-danger' %></p>
   </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>
+</div>
