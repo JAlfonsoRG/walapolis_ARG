@@ -1,8 +1,8 @@
 class User < ApplicationRecord
   # after_create :send_welcome_email
-  has_many :ideas
-  has_many :likes
-  has_many :comments
+  has_many :ideas, dependent: :destroy
+  has_many :likes, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

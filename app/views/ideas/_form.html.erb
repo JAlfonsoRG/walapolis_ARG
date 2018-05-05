@@ -69,6 +69,6 @@
 
   <div class="form-group text-center">
     <%= form.submit controller.action_name == "new" ? "Publicar idea" : "Actualizar idea", class: 'btn btn-primary' %>
-    <%= controller.action_name == "new" ?  (link_to '[X] Cancelar', ideas_path) : (link_to '[X] Cancelar', idea_path(idea)) %>
+    <%= link_to '[X] Cancelar cambios', :back %>
   </div>
 <% end %>

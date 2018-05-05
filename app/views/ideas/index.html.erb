@@ -1,34 +1,26 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Ideas</h1>
+<h3 class="font-weight-light">Mis Ideas</h3>
 
 <table class="table table-striped table-hover">
   <thead>
     <tr>
-      <th>Usuario</th>
-      <th>Título</th>
-      <th>Body</th>
-      <th>Beneficios</th>
-      <th>Costo inicial</th>
-      <th>Gastos mensuales</th>
-      <th>Tiempo estimado</th>
-      <th colspan="3"></th>
+      <th scope="col">Título</th>
+      <th scope="col">Categorias</th>
+      <th scope="col">Likes</th>
+      <th scope="col">Comentarios</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @ideas.each do |idea| %>
       <tr>
-        <td><%= idea.user.email %></td>
-        <td><%= idea.title %></td>
-        <td><%= idea.body %></td>
-        <td><%= idea.benefits %></td>
-        <td><%= idea.initial_cost %></td>
-        <td><%= idea.monthly_cost %></td>
-        <td><%= idea.estimated_time %></td>
-        <td><%= link_to 'Show', idea %></td>
-        <td><%= link_to 'Edit', edit_idea_path(idea) %></td>
-        <td><%= link_to 'Destroy', idea, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th scope="row"><%= idea.title %></th>
+        <td><%= idea.show_categories %></td>
+        <td><%= idea.total_likes %></td>
+        <td><%= idea.total_comments %></td>
+        <td><%= link_to "Ver idea", idea_path(idea) %></td>
+      <td><%= link_to "Editar idea", edit_idea_path(idea) %></td>
       </tr>
     <% end %>
   </tbody>
@@ -36,5 +28,5 @@
 
 <br>
 <span class="py-4">
-  <%= link_to 'Nueva Idea', new_idea_path, class: 'btn btn-primary' %>
+  <%= link_to "<i class='far fa-lightbulb'></i> Nueva idea".html_safe, new_idea_path, class: 'btn btn-primary' %>
 </span>

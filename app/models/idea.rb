@@ -1,9 +1,9 @@
 class Idea < ApplicationRecord
   belongs_to :user
-  has_many :likes
-  has_many :category_ideas
+  has_many :likes, dependent: :destroy
+  has_many :category_ideas, dependent: :destroy
   has_many :categories, through: :category_ideas
-  has_many :comments
+  has_many :comments, dependent: :destroy
 
   def show_categories
     categories = self.categories
