@@ -12,6 +12,15 @@
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %> 
       <%= devise_error_messages! %>
       <div class="form-group mt-5">
+        <p>Imagen de <strong>Perfil</strong></p>
+        <% if current_user.image.attached? %>
+          <%= image_tag current_user.image, width: '150', height: '150', class: 'rounded-circle' %>          
+        <% end %>
+      </div>
+      <div class="form-group">
+        <%= f.file_field :image, direct_upload: true %>
+      </div>
+      <div class="form-group">
         <p>Datos de <strong>Contacto</strong></p>
         <%= f.text_field :full_name, class: 'form-control', placeholder: 'Nombre completo' %>
       </div>
@@ -33,7 +42,7 @@
         <small>Permitir que otros usuarios me contacten por WhatsApp</small>        
       </div> 
       <div class="form-group">
-        <%= f.submit "Guardar perfil", class: 'btn btn-primary' %> 
+        <%= f.submit "Actualizar perfil", class: 'btn btn-primary' %> 
       </div>
     <% end %>
   </div>
@@ -56,7 +65,7 @@
           <%= f.password_field :current_password, autocomplete: "off", class: 'form-control', placeholder: 'Contraseña actual (requerida para confirmar cambio)' %>
         </div>
         <div class="form-group">
-          <%= f.submit "Cambiar contraseña", class: 'btn btn-primary' %>
+          <%= f.submit "Actualizar contraseña", class: 'btn btn-primary' %>
         </div>            
       <% end %> 
       

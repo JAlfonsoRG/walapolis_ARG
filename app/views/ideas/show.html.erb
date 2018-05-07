@@ -10,7 +10,11 @@
       <span class="count-likes"><%= @idea.total_likes %></span> likes
     </p>
     <div class="user-avatar">
-      <i class="fas fa-user-circle fa-3x"></i> <!-- current_user.image -->
+      <% if @idea.user.image.attached? %>
+        <%= image_tag @idea.user.image, width: '90', class: 'rounded-circle' %>
+      <% else %>
+        <i class="fas fa-user-circle fa-3x"></i> <!-- current_user.image -->        
+      <% end %>
       <p>
         <span><%= @idea.user.full_name %></span>
         <% if @idea.user.verificated? %>
@@ -24,7 +28,7 @@
 <div class="row pt-4 pb-4">
   <div class="col-sm-8">
     <p><span style="font-weight: '700'; font-size: '22px';"><%= @idea.title %></span> - <%= @idea.show_categories %></p>
-    <p>Por: <i class="fas fa-user-circle"></i> <%= @idea.user.full_name %> - <%= @idea.created_at.strftime("%d/%m/%y") %></p>
+    <p>Por: <% @idea.user.image.attached? ? (image_tag @idea.user.image, width: '20', class: 'rounded-circle') :  "<i class='fas fa-user-circle'></i>".html_safe %> <%= @idea.user.full_name %> - <%= @idea.created_at.strftime("%d/%m/%y") %></p>
     <div>
       <%= render "/layouts/shared/like_button", idea: @idea %>
       <span class="text-success"><span class="count-likes"><%= @idea.total_likes %></span> likes</span>

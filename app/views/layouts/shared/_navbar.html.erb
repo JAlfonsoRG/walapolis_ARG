@@ -33,7 +33,11 @@
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-user-circle"></i> <%= current_user.email %>
+            <% if current_user.image.attached? %>
+              <%= image_tag current_user.image, width: '25', height: '25', class: 'rounded-circle' %> <%= current_user.email %>
+            <% else %>
+              <i class="fas fa-user-circle"></i> <%= current_user.email %>
+            <% end %>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <%= link_to "<i class='far fa-lightbulb'></i> Mis propuestas".html_safe, ideas_path, class: 'dropdown-item' %> 
