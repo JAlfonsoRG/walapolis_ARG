@@ -11,30 +11,45 @@
     </div>
   <% end %>
 
+  <p>
+    Datos <strong>Generales</strong><br>
+    <small>Escribe un título claro para comunicar el objetivo de  tu propuesta. Utiliza el recuadro de descripción para profundizar sobre los aspectos más importantes de tu propuesta.</small>    
+  </p>
+
   <div class="form-group">
     <%= form.label :title, "Título" %>
     <%= form.text_field :title, class: 'form-control' %>
   </div>
 
   <div class="form-group">
-    <%= form.label :body, "Describe tu idea" %>
+    <%= form.label :body, "Describe tu propuesta" %>
     <%= form.text_area :body, rows: 10, class: 'form-control' %>
   </div>
+
+  <p>
+    <strong>Beneficios</strong><br>
+    <small>Para ayudar a que otras personas comprendan mejor de tu propuesta describe a continuación 3 beneficios <strong>concretos y específicos</strong> de tu propuesta.</small>    
+  </p>
   
   <div class="row mb-4">
     <div class="col-sm-4 form-group">
       <%= form.label :benefits, "Beneficio1:" %>
-      <%= form.text_field :benefits, class: 'form-control', name: 'idea[benefits][]', placeholder: 'Menciona un beneficio de tu propuesta', value: idea.benefits.try(:first) %>
+      <%= form.text_field :benefits, class: 'form-control', name: 'idea[benefits][]', value: idea.benefits.try(:first) %>
     </div>
     <div class="col-sm-4 form-group">
       <%= form.label :benefits, "Beneficio2:" %>
-      <%= form.text_field :benefits, class: 'form-control', name: 'idea[benefits][]', placeholder: 'Menciona un beneficio de tu propuesta', value: idea.benefits.try(:second) %>
+      <%= form.text_field :benefits, class: 'form-control', name: 'idea[benefits][]', value: idea.benefits.try(:second) %>
     </div>
     <div class="col-sm-4 form-group">
       <%= form.label :benefits, "Beneficio3:" %>
-      <%= form.text_field :benefits, class: 'form-control', name: 'idea[benefits][]', placeholder: 'Menciona un beneficio de tu propuesta', value: idea.benefits.try(:third) %>
+      <%= form.text_field :benefits, class: 'form-control', name: 'idea[benefits][]', value: idea.benefits.try(:third) %>
     </div>
   </div>
+
+  <p>
+    <strong>Costo y tiempo</strong><br>
+    <small>La <strong>inversión inicial</strong> se refiere al costo estimado requerido para arrancar y concretar tu propuesta. El <strong>gasto mensual</strong> se refiere al costo estimado para su mantenimiento y operación. El <strong>tiempo estimado</strong> se refiere al tiempo requerido para entregar el proyecto.</small>
+  </p>
   
   <div class="row mb-4">
     <div class="col-sm-4 form-group">
@@ -46,10 +61,15 @@
         <%= form.text_field :monthly_cost, class: 'form-control' %>
     </div>
     <div class="col-sm-4 form-group">
-        <%= form.label :estimated_time, "Tiempo estimado" %>
+        <%= form.label :estimated_time, "Tiempo estimado(meses)" %>
         <%= form.number_field :estimated_time, class: 'form-control' %>
     </div>
   </div>
+
+  <p>
+    <strong>Categorias</strong><br>
+    <small>Selecciona hasta <strong>2 categorias</strong> para ayudar a clasificar tu propuesta y sea más fácil para otros usuarios encontrarla.</small>
+  </p>
 
   <%= form.label nil, 'Selecciona 2 categorias:' %><br>
   <div class="row">
@@ -58,7 +78,7 @@
         <% categories.each do |category| %>
           <div class="checkbox">
             <label class="checkbox inline">
-              <%= check_box_tag :category_ids, category.id, @idea.categories.include?(category), name: 'idea[category_ids][]' %>
+              <%= check_box_tag :category_ids, category.id, @idea.categories.include?(category), name: 'idea[category_ids][]', category: 'category-idea-checkbox' %>
               <%= category.name %>
             </label>
           </div>

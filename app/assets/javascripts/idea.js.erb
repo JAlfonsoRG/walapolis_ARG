@@ -1,4 +1,10 @@
 $(document).on('turbolinks:load', function(){
+
+  $('.category-idea-checkbox').on("click", function(){
+    $(this).next().next().prop('disabled', !this.checked);
+    $('.category-idea-checkbox').not(':checked').prop('disabled', $('.category-idea-checkbox:checked').length == 2);
+  });
+
   $('.button-like').on("click", function(){
     var button = $(this);
     var liked = button.attr("data-liked");

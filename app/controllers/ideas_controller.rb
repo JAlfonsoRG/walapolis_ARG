@@ -32,9 +32,11 @@ class IdeasController < ApplicationController
   def create
     @idea = Idea.new(idea_params)
     @idea.user_id = current_user.id
+    # Allow only 2 categories(first two only)
+    @idea.category_ids = @idea.category_ids[0..1]
     respond_to do |format|
       if @idea.save
-        format.html { redirect_to @idea, notice: 'Idea was successfully created.' }
+        format.html { redirect_to @idea, notice: 'Has publicado tu propuesta en Walapolis.' }
         format.json { render :show, status: :created, location: @idea }
       else
         format.html { render :new }
@@ -48,7 +50,7 @@ class IdeasController < ApplicationController
   def update
       respond_to do |format|
         if @idea.update(idea_params)
-          format.html { redirect_to @idea, notice: 'Idea was successfully updated.' }
+          format.html { redirect_to @idea, notice: 'Has actualizado tu propuesta exitosamente.' }
           format.json { render :show, status: :ok, location: @idea }
         else
           format.html { render :edit }
@@ -62,7 +64,7 @@ class IdeasController < ApplicationController
   def destroy
     @idea.destroy
     respond_to do |format|
-      format.html { redirect_to ideas_url, notice: 'Idea was successfully destroyed.' }
+      format.html { redirect_to ideas_url, notice: 'Has borrado tu propuesta exitosamente.' }
       format.json { head :no_content }
     end
   end

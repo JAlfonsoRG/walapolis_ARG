@@ -4,7 +4,7 @@
       <% ideas.each do |idea| %>
         <div class="col-sm-4">
           <div class="card">
-              <%= image_tag 'idea-bg.jpg', class: 'card-img-top', style: 'min-height: 265px; max-height: 265px;' %>
+              <%# image_tag 'idea-bg.jpg', class: 'card-img-top', style: 'min-height: 265px; max-height: 265px;' %>
               <div class="card-body">
                 <h5 class="card-title"><%= idea.title %></h5>
                 <p>
@@ -19,9 +19,16 @@
                   <%= idea.total_likes %> likes // <%= idea.total_comments %> comentarios
                 </small>
               </div>
-              <p class="card-text"><%= idea.body.truncate(140) %> <%= link_to "Ver más..", idea_path(idea) %></p>
+              <p class="card-text"><%= idea.body.truncate(140) %></p>
               <div class="card-footer">
-                <%= render "/layouts/shared/like_button", idea: idea %>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <%= render 'layouts/shared/like_button', idea: idea %>
+                  </div>
+                  <div class="col-sm-6">
+                    <%= link_to "<i class='fas fa-external-link-alt'></i> Leer mas".html_safe, idea_path(idea), class: 'btn btn-link' %>
+                  </div>
+                </div>
               </div>
           </div>
         </div>
@@ -30,8 +37,8 @@
   <% end %>
 <% else %>
   <% if user_signed_in? %>
-    <p>No existen ideas registradas <%= link_to "Crea la primer idea", new_idea_path %> </p>
+    <p>No existen propuestas publicadas <%= link_to "Publica la primer propuesta en Walapolis", new_idea_path %> </p>
   <% else %>
-    <p>No existen ideas registraadas <%= link_to "Ingresa para crear la primera idea", new_user_session_path %></p>
+    <p>No existen propuestas publicadas <%= link_to "Ingresa para publicar la primera propuesta en Walapolis", new_user_session_path %></p>
   <% end %>
 <% end %>

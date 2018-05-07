@@ -26,10 +26,10 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     @comment = Comment.new(comment_params)
-
+    @comment.user_id = current_user.id
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to idea_path(@comment.idea), notice: 'Comment was successfully created.' }
+        format.html { redirect_to idea_path(@comment.idea), notice: 'Se ha publicado tu comentario exitosamente.' }
         format.json { render :show, status: :created, location: @comment }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to idea_path(@comment.idea), notice: 'Comment was successfully updated.' }
+        format.html { redirect_to idea_path(@comment.idea), notice: 'Has actualizado tu comentario exitosamente.' }
         format.json { render :show, status: :ok, location: @comment }
       else
         format.html { render :edit }
@@ -59,7 +59,7 @@ class CommentsController < ApplicationController
     if @comment.user == current_user
       @comment.destroy
       respond_to do |format|
-        format.html { redirect_to idea_path(idea), notice: 'Comment was successfully destroyed.' }
+        format.html { redirect_to idea_path(idea), notice: 'Se ha eliminado tu comentario exitosamente.' }
         format.json { head :no_content }
       end
     else
