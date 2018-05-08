@@ -76,11 +76,11 @@ class IdeasController < ApplicationController
     end
 
     def verify_ownership
-      redirect_to root_path, notice: 'Acceso denegado' if @idea.user_id != current_user.id
+      redirect_to root_path, alert: {class: 'alert-danger', body: "Acceso denegado"} if @idea.user_id != current_user.id
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def idea_params
-      params.require(:idea).permit(:title, :body, :initial_cost, :monthly_cost, :estimated_time, category_ids:[], benefits:[])
+      params.require(:idea).permit(:title, :body, :initial_cost, :monthly_cost, :estimated_time, :image, category_ids:[], benefits:[])
     end
 end

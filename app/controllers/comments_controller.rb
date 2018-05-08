@@ -79,6 +79,6 @@ class CommentsController < ApplicationController
     end
 
     def verify_ownership
-      redirect_to root_path, alert: 'acceso denegado' if @comment.user_id != current_user.id
+      redirect_to root_path, alert: {class: 'alert-danger', body: "Acceso denegado"} if @comment.user_id != current_user.id
     end
 end
