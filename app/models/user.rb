@@ -16,8 +16,11 @@ class User < ApplicationRecord
       user.password = Devise.friendly_token[0,20]
       user.full_name = auth.info.name
       # user.image = auth.info.image # assuming the user model has an image
-      require 'open-uri'
-      user.image.attach(io: File.new(open(auth.info.image.to_s)), filename: "#{auth.info.email}-#{rand(100)}", content_type: "image/jpg")
+      # require 'open-uri'
+      # user.image.attach(io: File.new(open(auth.info.image.to_s)), filename: "#{auth.info.email}-#{rand(100)}", content_type: "image/jpg")
+#No siempre funciona la línea de arriba
+
+
       # If you are using confirmable and the provider(s) you use validate emails, 
       # uncomment the line below to skip the confirmation emails.
       # user.skip_confirmation!

@@ -1,0 +1,53 @@
+<div id="filters">
+    <nav class="nav pb-3">
+      <small class="ml-auto"><%= link_to "<i class='fas fa-trophy'></i> Más populares".html_safe, current_page?(root_path) ? root_path(filter: "most-popular") : profile_path(@user, filter: "most-popular"), class: 'nav-link' %></small>
+      <small><%= link_to "<i class='fas fa-sort-alpha-down'></i> Más recientes".html_safe, current_page?(root_path) ? root_path(filter: "most-recent") : profile_path(@user, filter: "most-recent"), class: 'nav-link' %></small>
+      <small><%= link_to "<i class='fas fa-sort-alpha-down'></i> Más antiguas".html_safe, current_page?(root_path) ? root_path(filter: "oldest") : profile_path(@user, filter: "oldest"), class: 'nav-link' %></small>
+    </nav>
+</div>
+
+<% @ideas.each_slice(ideas_by_row) do |ideas| %>
+    <div class="row mb-5">
+      <% ideas.each do |idea| %>
+        <div class="col-sm-<%= col_size %>">
+          <div class="card">
+            <% if idea.image.attached? %>
+            <%= link_to (image_tag url_for(idea.image), class: 'card-img-top'), idea %>
+              <%#= image_tag idea.image, height: '265px' %>                
+            <% else %>            
+              <%= image_tag 'gray.jpg', class: 'card-img-top', height: '265px' %>
+            <% end %>
+            <div class="card-body">
+              <h5 class="card-title"><%= idea.title %></h5>
+              <p>
+                <small>
+                  <% idea.categories.each do |category| %>
+                    <%= link_to category.name, root_path(categoria: category)  %> |
+                  <% end %>
+                </small>
+              </p>
+              <small class="card-subtitle mb-2 text-muted">
+                Por: <%= link_to idea.user.full_name, profile_path(user_id: idea.user.id) %> hace <%= time_ago_in_words(idea.created_at) %> <br>                  
+                <%= idea.total_likes %>                                    
+                  <a data-toggle="tooltip"  href="#" data-placement="right" title="Esta propuesta le gusta a: <% idea.likes.each do |like| %><%= like.user.full_name %> <% end %>">
+                    <%= idea.total_likes==1 ? "like" : "likes" %>
+                  </a>//
+                <%= idea.total_comments %> <%= idea.total_comments == 1 ? "comentario" : "comentarios" %>
+              </small>
+            </div>
+            <p class="card-text"><%= idea.body.truncate(140) %></p>
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-sm-6">
+                  <%= render 'layouts/shared/like_button', idea: idea %>
+                </div>
+                <div class="col-sm-6">
+                  <%= link_to "<i class='fas fa-external-link-alt'></i> Leer mas".html_safe, idea_path(idea), class: 'btn btn-link' %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end  %>
+    </div>
+  <% end %>

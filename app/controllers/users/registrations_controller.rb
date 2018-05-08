@@ -5,6 +5,36 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_account_update_params, only: [:update]
   before_action :set_greeting, only: [:new]
 
+  def profile
+    @user = User.find(params[:user_id])
+    @ideas = Idea.where(user_id: @user.id)    
+    @likes_global = 0
+    @total_cost = 0
+
+    if @ideas.present?
+      @most_popular = @ideas.first
+      @ideas.each do |idea|
+        if idea.likes.count > @most_popular.likes.count
+          @most_popular = idea
+        end
+          @total_cost += idea.initial_cost
+          @likes_global += idea.likes.count
+      end      
+    end
+
+    if params[:filter]
+      if params[:filter] == 'most-popular'
+        #@ideas.sort_by(&:total_likes).reverse
+        @ideas = @ideas.sort_by{|idea| idea.total_likes}.reverse
+      elsif params[:filter] == 'most-recent'
+        @ideas = @ideas.order('id desc')
+      else
+        @ideas = @ideas.order('id asc')
+      end
+    end
+
+  end
+
   # GET /resource/sign_up
   # def new
   #   super

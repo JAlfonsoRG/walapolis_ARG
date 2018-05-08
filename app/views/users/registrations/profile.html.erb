@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-sm-4">
+    <div class="user-avatar">
+      <% if @user.image.attached? %>
+        <%= image_tag @user.image, width: '90', class: 'rounded-circle' %>
+      <% else %>
+        <i class="fas fa-user-circle fa-2x"></i>
+      <% end %>
+
+    </div>
+    <p><i class="far fa-lightbulb"></i>Conteo de ideas publicadas<%= %></p>
+    <p><i class="far fa-thumbs-up"></i>Sus propuestas han recibido <%= @likes_global%></p>
+    <% if @most_popular.likes.count > 0 %>
+    <p><i class="fas fa-trophy"></i>Su propuesta más pupular es <%= link_to @most_popular.title, idea_path(id: @most_popular) %></p>
+    <% end %>
+    <p><i class="fas fa-dollar-sign"></i> Sus propuestas suman un aproximado de <%= number_to_currency(@total_cost) %></p>
+    <%= render 'layouts/shared/talk_to_user', user: @user %>
+  </div>
+  <div class="col-sm-8">
+    <%= render 'layouts/shared/ideas', col_size: 6, ideas_by_row: 2  %>    
+  </div>
+</div>

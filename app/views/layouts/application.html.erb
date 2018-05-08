@@ -14,9 +14,13 @@
 
   <body>
     <%= render 'layouts/shared/navbar' %> 
-    <%= render 'layouts/shared/notifications' %>       
-    <div class="container">
-      <%= yield %>
-    </div>      
+    <%= render 'layouts/shared/notifications' %>
+    <% if controller.controller_name == "ideas" && controller.controller_name == "show" %>
+      <%= yield %>      
+    <% else %>
+      <div class="container">
+        <%= yield %>
+      </div>            
+    <% end %>    
   </body>
 </html>

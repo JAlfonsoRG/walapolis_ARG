@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       devise_scope :user do
         get 'entrar', to: 'users/sessions#new', as: :entrar
         get 'registro', to: 'users/registrations#new', as: :registro
+        get 'perfiles/:user_id', to: 'users/registrations#profile', as: :profile
       end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
