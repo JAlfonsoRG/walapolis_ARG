@@ -41,7 +41,7 @@ class User < ApplicationRecord
   end
   
   def send_welcome_email
-    require 'mailgun'   
+    require 'mailgun-ruby'   
     # First, instantiate the Mailgun Client with your API key
     mg_client = Mailgun::Client.new "#{ENV['MAILGUN_API_KEY']}"    
     # Define your message parameters
@@ -51,7 +51,7 @@ class User < ApplicationRecord
                         text:    "WOW! #{self.full_name} Ya estás dentro de Walapolis :D"
                       }   
     # Send your message through the client
-    mg_client.send_message 'mg.ixolab.com', message_params
+    mg_client.send_message 'mg.inbrightcorp.com', message_params
   end
 
 end
