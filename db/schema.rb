@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 2018_05_07_174634) do
     t.bigint "user_id"
     t.string "title"
     t.text "body"
-    t.string "benefits", array: true
+    t.text "benefits", default: [], array: true
     t.decimal "initial_cost"
     t.decimal "monthly_cost"
     t.integer "estimated_time"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 2018_05_07_174634) do
     t.bigint "idea_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["idea_id", "user_id"], name: "index_likes_on_idea_id_and_user_id", unique: true
     t.index ["idea_id"], name: "index_likes_on_idea_id"
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
@@ -105,7 +106,7 @@ ActiveRecord::Schema.define(version: 2018_05_07_174634) do
     t.string "provider"
     t.string "uid"
     t.text "bio"
-    t.boolean "verificated"
+    t.boolean "verificated", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

@@ -10,9 +10,11 @@
     </div>
     <p><i class="far fa-lightbulb"></i>Conteo de ideas publicadas<%= %></p>
     <p><i class="far fa-thumbs-up"></i>Sus propuestas han recibido <%= @likes_global%></p>
-    <% if @most_popular.likes.count > 0 %>
-    <p><i class="fas fa-trophy"></i>Su propuesta más pupular es <%= link_to @most_popular.title, idea_path(id: @most_popular) %></p>
-    <% end %>
+   <% if @most_popular.present? %>
+      <% if @most_popular.likes.count > 0 %>
+        <p><i class="fas fa-trophy"></i>Su propuesta más pupular es <%= link_to @most_popular.title, idea_path(id: @most_popular) %></p>
+      <% end %>
+   <% end %>
     <p><i class="fas fa-dollar-sign"></i> Sus propuestas suman un aproximado de <%= number_to_currency(@total_cost) %></p>
     <%= render 'layouts/shared/talk_to_user', user: @user %>
   </div>
