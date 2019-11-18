@@ -67,3 +67,4 @@ gem 'omniauth-google-oauth2'
 gem 'mailgun-ruby', '~>1.1.6'
 gem 'aws-sdk-s3'
 gem 'omniauth-rails_csrf_protection', '~> 0.1.2'
+gem 'loofah', ">= 2.3.1"
